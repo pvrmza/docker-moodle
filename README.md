@@ -17,4 +17,9 @@ another moodle in docker or another docker with moodle...
     MOODLE_PROXY ( $CFG->reverseproxy -> default ->  )
     SSL_PROXY ( $CFG->sslproxy -> default -> false )
 
-    
+# Volumen
+	/var/moodledata
+	/config
+
+# Ports
+	80 443
