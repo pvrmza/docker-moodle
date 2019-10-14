@@ -1,6 +1,6 @@
 # Docker-Moodle
 # Dockerfile for moodle instance. more dockerish version of https://github.com/sergiogomez/docker-moodle and https://github.com/jda/docker-moodle
-FROM ubuntu:19.04
+FROM ubuntu:18.04
 LABEL maintainer="Pablo A. Vargas <pablo@pampa.cloud>"
 
 # Let the container know that there is no tty
