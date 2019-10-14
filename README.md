@@ -4,6 +4,10 @@ another moodle in docker or another docker with moodle...
 
 
 # Environment 
+
+
+| Environment | Moodle Config | Default value | Contenido | 
+| :--- |:--- | :--- | :---| 
 | **MOODLE_DATABASE_TYPE** | $CFG->dbtype | mariadb | 'pgsql', 'mariadb', 'mysqli', 'mssql', 'sqlsrv' or 'oci' |  
 | **MOODLE_DATABASE_HOST** | $CFG->dbhost | mariadb | 'localhost' or 'db.isp.com' or IP |
 | **MOODLE_DATABASE_PORT** | $CFG->dboption[dbport] | 3306 | the TCP port number to use when connecting to the server |
