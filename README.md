@@ -1,8 +1,9 @@
+
 # docker-moodle
 another moodle in docker or another docker with moodle...
 
 
-Environment 
+# Environment 
     MOODLE_DATABASE_TYPE ( $CFG->dbtype -> default -> mariadb)  
     MOODLE_DATABASE_HOST ( $CFG->dbhost -> default -> mariadb)
     MOODLE_DATABASE_PORT ( $CFG->dboption[dbport] -> default -> 3306) 
@@ -15,3 +16,5 @@ Environment
 
     MOODLE_PROXY ( $CFG->reverseproxy -> default ->  )
     SSL_PROXY ( $CFG->sslproxy -> default -> false )
+
+    
