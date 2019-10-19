@@ -1,12 +1,11 @@
-# Docker-Moodle
-# Dockerfile for moodle instance. more dockerish version of https://github.com/sergiogomez/docker-moodle and https://github.com/jda/docker-moodle
+# base
 FROM ubuntu:18.04
 LABEL maintainer="Pablo A. Vargas <pablo@pampa.cloud>"
 
-# Let the container know that there is no tty
+# Environment
 ENV DEBIAN_FRONTEND noninteractive
 
-#
+# update & upgrade & install base
 RUN apt update && apt -y dist-upgrade && apt -y install mysql-client pwgen python-setuptools curl git unzip apache2 php php-gd libapache2-mod-php postfix wget supervisor php-pgsql curl libcurl4 libcurl3-dev php-curl php-xmlrpc php-intl php-mysql git-core php-xml php-mbstring php-zip php-soap cron php-ldap vim locales
 
 #
@@ -25,13 +24,10 @@ COPY files/moodlecron /etc/cron.d/moodlecron
 #
 RUN chmod 0644 /etc/cron.d/moodlecron && chmod +x /etc/apache2/foreground.sh && \
     sed -ri 's!^(\s*CustomLog)\s+\S+!\1 /proc/self/fd/1!g; s!^(\s*ErrorLog)\s+\S+!\1 /proc/self/fd/2!g;' /etc/apache2/sites-available/*.conf && \
-    a2enmod ssl && a2ensite default-ssl && a2enconf apache-moodle
+    a2enmod ssl && a2ensite default-ssl && a2enconf apache-moodle && echo "TLS_REQCERT never" >> /etc/ldap/ldap.conf
 
 # Cleanup, this is ran to reduce the resulting size of the image.
 RUN apt-get clean autoclean && apt-get autoremove -y && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /var/lib/cache/* /var/lib/log/* /var/lib/apt/lists/*
-
-# 
-RUN echo "TLS_REQCERT never" >> /etc/ldap/ldap.conf
 
 ENV MOODLE_DATABASE_TYPE="mariadb" \ 
     MOODLE_DATABASE_HOST="mariadb" \
