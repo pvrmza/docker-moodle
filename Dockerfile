@@ -40,7 +40,7 @@ ENV MOODLE_DATABASE_TYPE="mariadb" \
     SSL_PROXY=false 
 
 
-VOLUME ["/var/moodledata","/config"]
+VOLUME ["/var/moodledata","/config","/var/www/html/mod"]
 EXPOSE 80 443
 
 ENTRYPOINT ["/etc/apache2/foreground.sh"]
