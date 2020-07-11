@@ -17,8 +17,8 @@ services:
       - db
     links:
       - db:db
-    image: docker-moodle:200711-1840
-    #image: pvrmza/docker-moodle
+    #image: docker-moodle:200711-1840
+    image: pvrmza/docker-moodle
     restart: always
     env_file:
       - .env_moodle
