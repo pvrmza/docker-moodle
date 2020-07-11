@@ -1,0 +1,5 @@
+MYSQL_USER=moodle
+MYSQL_DATABASE=moodle
+MYSQL_PASSWORD=moodlepwd@
+MYSQL_ROOT_PASSWORD=CHANGEIT_pass@!
+TZ=America/Argentina/Mendoza

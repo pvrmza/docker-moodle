@@ -1,0 +1,35 @@
+version: '2'
+
+services:
+  db:
+    image: mysql:5
+    restart: always
+    env_file:
+      - .env_mysql
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "3306"
+
+
+  app:
+    depends_on:
+      - db
+    links:
+      - db:db
+    image: docker-moodle:200711-1840
+    #image: pvrmza/docker-moodle
+    restart: always
+    env_file:
+      - .env_moodle
+    volumes:
+      - moodleapp-data:/var/moodledata
+      - moodleapp-plugins:/var/www/html/mod
+    ports:
+      - "8011:80"
+
+volumes:
+  db_data:
+  moodleapp-data:
+  moodleapp-plugins:
+

@@ -1,27 +1,44 @@
 
-# docker-moodle
-another moodle in docker or another docker with moodle...
+# docker-moodle unattended deploy
+not another moodle in docker 
 
+Moodle is a very popular open source learning management solution (LMS) for the delivery of elearning courses and programs. It’s used not only by universities, but also by hundreds of corporations around the world who provide eLearning education for their employees. Moodle features a simple interface, drag-and-drop features, role-based permissions, deep reporting, many language translations, a well-documented API and more. With some of the biggest universities and organizations already using it, Moodle is ready to meet the needs of just about any size organization.
 
-# Environment 
+Site: https://moodle.org/
 
+## Features
+* All configurations can be added from environment variables
+* Moodle security recommendations for apache and php
+* Check/move admin directory
 
-| Environment | Moodle Config | Default value | Contenido | 
-| :--- |:--- | :--- | :---| 
-| **MOODLE_DATABASE_TYPE** | $CFG->dbtype | mariadb | 'pgsql', 'mariadb', 'mysqli', 'mssql', 'sqlsrv' or 'oci' |  
-| **MOODLE_DATABASE_HOST** | $CFG->dbhost | mariadb | 'localhost' or 'db.isp.com' or IP |
-| **MOODLE_DATABASE_PORT** | $CFG->dboption[dbport] | 3306 | the TCP port number to use when connecting to the server |
-| **MOODLE_DATABASE_NAME** | $CFG->dbname | moodle | database name, eg moodle |  
-| **MOODLE_DATABASE_USER** | $CFG->dbuser | moodle | your database username |  
-| **MOODLE_DATABASE_PASSWORD** | $CFG->dbpass | moodle | your database password |
-| **MOODLE_URL** | $CFG->wwwroot | http://127.0.0.1 | The full web address where moodle was installed, server name and directory. The directory can be the root or / moodle |  
-| **MOODLE_USERNAME** | $CFG->admin | admin |  |  
-| **MOODLE_PROXY** | $CFG->reverseproxy |   | Enable when using external proxy  | 
-| **SSL_PROXY** | $CFG->sslproxy | false  | Enable when using external SSL appliance | 
+### Config values
+All environment variables starting MOODLE_ will be transformed to $CFG and added automatically to the config.php file. Double _ separates array. Example:
+
+| Environment | Moodle Config | 
+| :--- |:--- |
+| MOODLE_dbhost=db | $CFG->dbhost="db"; | 
+| MOODLE_apacheloguser=2 | $CFG->apacheloguser=2; | 
+| MOODLE_dboptions__dbpersist=false | $CFG->dboptions['dbpersist']=false; | 
+| MOODLE_dboptions__dbsocket=false | $CFG->dboptions['dbsocket']=false; | 
+
+### Check/move admin directory
+If you define MOODLE_admin ($CFG->admin) rename admin directory to MOODLE_admin
+
+## Deploy
+
+### Docker Composer
+- Run both database and moodle containers.
+```
+  $ git clone https://github.com/pvrmza/docker-moodle.git 
+  $ cd docker-moodle
+  $ cp env_mysql_example .env_mysql
+  $ cp env_moodle_example .env_observium
+  $ docker-compose up
+``
 
 # Volumen
 	/var/moodledata
-	/config
+	/var/www/html/mod
 
 # Ports
-	80 443
+	80 
