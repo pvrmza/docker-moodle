@@ -10,6 +10,7 @@ Site: https://moodle.org/
 * All configurations can be added from environment variables
 * Moodle security recommendations for apache and php
 * Check/move admin directory
+* Version: 3.7 (STABLE) / 3.8 (STABLE) / 3.9 (STABLE)
 
 ### Config values
 All environment variables starting MOODLE_ will be transformed to $CFG and added automatically to the config.php file. Double _ separates array. Example:
@@ -34,10 +35,11 @@ If you define MOODLE_admin ($CFG->admin) rename admin directory to MOODLE_admin
   $ cp env_mysql_example .env_mysql
   $ cp env_moodle_example .env_observium
   $ docker-compose up
-``
+```
 
 # Volumen
 	/var/moodledata
+	/var/www/html/theme
 	/var/www/html/mod
 
 # Ports
