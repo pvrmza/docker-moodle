@@ -31,7 +31,7 @@ RUN chmod 0644 /etc/cron.d/moodlecron ; \
 RUN apt-get clean autoclean && apt-get autoremove -y && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /var/lib/cache/* /var/lib/log/* /var/lib/apt/lists/*
 
 
-VOLUME ["/var/moodledata","/config","/var/www/html/mod"]
+VOLUME ["/var/moodledata","/var/www/html/theme","/var/www/html/mod"]
 EXPOSE 80 443
 
 ENTRYPOINT ["/etc/foreground.sh"]
