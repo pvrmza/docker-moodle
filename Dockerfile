@@ -33,5 +33,5 @@ RUN apt-get clean autoclean && apt-get autoremove -y && rm -rf /var/lib/apt/list
 
 VOLUME ["/var/moodledata","/var/www/html/theme","/var/www/html/mod"]
 EXPOSE 80 443
-
+#
 ENTRYPOINT ["/etc/foreground.sh"]
