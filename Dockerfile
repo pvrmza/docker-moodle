@@ -9,6 +9,7 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && apt-get -y dist-upgrade && apt-get -y install mysql-client pwgen python-setuptools curl git unzip apache2 php php-gd libapache2-mod-php postfix wget supervisor php-pgsql curl libcurl4 libcurl3-dev php-curl php-xmlrpc php-intl php-mysql git-core php-xml php-mbstring php-zip php-soap cron php-ldap vim locales
 
 #
+
 RUN cd /tmp && git clone -b MOODLE_38_STABLE git://git.moodle.org/moodle.git --depth=1 && \
 	mv /tmp/moodle/* /var/www/html/ && rm -rf /var/www/html/index.html && \
 	chown -R www-data:www-data /var/www/html 
@@ -22,7 +23,7 @@ COPY files/moodlecron /etc/cron.d/moodlecron
 
 #
 RUN chmod 0644 /etc/cron.d/moodlecron ; \
-	chmod +x /etc/foreground.sh ; \
+    chmod +x /etc/foreground.sh ; \
     cd /var/log/apache2/ ; for i in *log; do rm $i; ln -s /dev/stdout $i;done ; \
     a2enconf apache-moodle ; \ 
     echo "TLS_REQCERT never" >> /etc/ldap/ldap.conf
@@ -34,4 +35,7 @@ RUN apt-get clean autoclean && apt-get autoremove -y && rm -rf /var/lib/apt/list
 VOLUME ["/var/moodledata","/var/www/html/theme","/var/www/html/mod"]
 EXPOSE 80 443
 
+ENV MOODLE_VER=3.8
+
 ENTRYPOINT ["/etc/foreground.sh"]
+
