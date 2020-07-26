@@ -1,31 +1,44 @@
+
+# date time & languages
 TZ=America/Argentina/Mendoza
-VIRTUAL_HOST=moodle.local
-VIRTUAL_PORT=80
+MOODLE_lang=es
 
-MOODLE_wwwroot=http://localhost:8011
+#### nging proxy reverse and SSL
+VIRTUAL_HOST=localhost
+VIRTUAL_PORT=8011
+VIRTUAL_URL=/moodle
 
+# If the docker is behind a reverse proxy
+# MOODLE_reverseproxy=true
+
+# If the reverse proxy is SSL
+# MOODLE_sslproxy=true
+
+# This is generated when starting the container with the previous variables
+# MOODLE_wwwroot=http://$VIRTUAL_HOST:$VIRTUAL_PORT$VIRTUAL_URL
+
+
+# DB Connect
 MOODLE_dbtype=mysqli
-MOODLE_dblibrary=native
-
 MOODLE_dbhost=db
 MOODLE_dbname=moodle
 MOODLE_dbuser=moodle
 MOODLE_dbpass=moodlepwd@
-MOODLE_prefix=mdl_
 
+# DB Options
+MOODLE_prefix=mdl_
+MOODLE_dblibrary=native
 MOODLE_dboptions__dbpersist=false
 MOODLE_dboptions__dbsocket=false
 MOODLE_dboptions__dbport=3306
 MOODLE_dboptions__dbhandlesoptions=false
 MOODLE_dboptions__dbcollation=utf8mb4_unicode_ci
 
-
+# Directory and permission
 MOODLE_dataroot=/var/moodledata
 MOODLE_directorypermissions=02777
 MOODLE_admin=admin
-MOODLE_lang=es
 
-#MOODLE_reverseproxy=true
-#MOODLE_sslproxy=true
-
+# log username in access_log
 MOODLE_apacheloguser=2
+

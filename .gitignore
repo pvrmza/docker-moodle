@@ -1,7 +1,10 @@
 # dotenv environment variables file
-construye.sh
 .env*
 *.env
+
+# dev tools
+construye.sh
+docker-compose-dev.yml
 
 # Temporary folders
 tmp/
