@@ -10,14 +10,13 @@ touch /etc/crontab  /etc/cron.d/php /etc/cron.d/moodlecron
 
 #######
 # timezone
-if [ -f /usr/share/zoneinfo/$TZ ]; then
+if test -v TZ; then
   echo $TZ > /etc/timezone 
   rm /etc/localtime &&  ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
   dpkg-reconfigure -f noninteractive tzdata 
 
   echo "date.timezone=$TZ" > /etc/php/7.2/apache2/conf.d/99_datatime.ini 
 fi
-
 #######
 # LANG
 if test -v MOODLE_lang; then
@@ -32,7 +31,7 @@ fi
 # Building URL
 if test -v VIRTUAL_URL; then
   # Apache conf
-  echo -e "\nAlias $VIRTUAL_URL /var/www/html \n" > /etc/apache2/conf-enabled/apache-moodle-url.conf
+  echo -e "\nAlias $VIRTUAL_URL /var/www/html \n" > /etc/apache2/conf-available/apache-moodle.conf
 fi
 
 if test -v MOODLE_sslproxy; then
