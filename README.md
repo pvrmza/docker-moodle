@@ -9,7 +9,7 @@ Site: https://moodle.org/
 ## Version/TAG: 
 * 3.7 (3.7_STABLE 3.7.7+ build 20200716) 
 * 3.8 (3.8_STABLE 3.8.4+ build 20200723) 
-* 3.9 (3.9_STABLE 3.9.1+ build 20200723)
+* 3.9 (3.9_STABLE 3.9.2+ build 20200922)
 
 
 ## Features
@@ -32,7 +32,7 @@ All environment variables starting MOODLE_ will be transformed to $CFG and added
 ### Check/move admin directory
 If you define MOODLE_admin ($CFG->admin) rename admin directory to MOODLE_admin
 
-In certain circumstances you will want to move the management directory (/ admin) to another location (for security or compatibility reasons)
+In certain circumstances you will want to move the management directory (/admin) to another location (for security or compatibility reasons)
 For this you only have to define the environment variable MOODLE_admin with the name with which you want it to be renaming the directory "admin"
 
 ### URL 
@@ -55,7 +55,7 @@ In this way, you can use VIRTUAL_URL to publish moodle in any URL, something ver
   $ cd docker-moodle
   $ cp env_mysql_example .env_mysql
   $ cp env_moodle_example .env_moodle
-  $ docker-compose up
+  $ docker-compose up -d
 ```
 
 # Volumen
