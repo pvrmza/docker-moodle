@@ -10,7 +10,7 @@ RUN apt-get update && apt-get -y dist-upgrade && apt-get -y install mysql-client
 
 #
 
-RUN cd /tmp && git clone -b MOODLE_39_STABLE git://git.moodle.org/moodle.git --depth=1 && \
+RUN cd /tmp && git clone -b MOODLE_38_STABLE git://git.moodle.org/moodle.git --depth=1 && \
 	mv /tmp/moodle/* /var/www/html/ && rm -rf /var/www/html/index.html && \
 	chown -R root:www-data /var/www/html && \
     find /var/www/html -type d -exec chmod 750 {} \;  && \
@@ -37,6 +37,6 @@ RUN apt-get clean autoclean && apt-get autoremove -y && rm -rf /var/lib/apt/list
 VOLUME ["/var/moodledata","/var/www/html/theme","/var/www/html/mod"]
 EXPOSE 80 443
 
-ENV MOODLE_VER=3.9
+ENV MOODLE_VER=3.8
 
 ENTRYPOINT ["/etc/foreground.sh"]
