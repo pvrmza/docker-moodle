@@ -7,9 +7,9 @@ Moodle is a very popular open source learning management solution (LMS) for the 
 Site: https://moodle.org/
 
 ## Version/TAG: 
-* 3.7 (3.7_STABLE 3.7.8 build 20200922) 
-* 3.8 (3.8_STABLE 3.8.5+ build 20200922) 
-* 3.9 (3.9_STABLE 3.9.2+ build 20200922)
+* 3.7 (3.7_STABLE 3.7.8 build 20201002) 
+* 3.8 (3.8_STABLE 3.8.5+ build 20201002) 
+* 3.9 (3.9_STABLE 3.9.2+ build 20201002)
 
 
 ## Features
