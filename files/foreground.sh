@@ -10,21 +10,28 @@ touch /etc/crontab  /etc/cron.d/php /etc/cron.d/moodlecron
 
 #######
 # timezone
-if [ -f /usr/share/zoneinfo/$TZ ]; then
-  echo $TZ > /etc/timezone 
-  rm /etc/localtime &&  ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
-  dpkg-reconfigure -f noninteractive tzdata 
+if test -v TZ && [ `readlink /etc/localtime` != "/usr/share/zoneinfo/$TZ" ]; then
+  if [ -f /usr/share/zoneinfo/$TZ ]; then
+    echo $TZ > /etc/timezone 
+    rm /etc/localtime 
+    ln -snf /usr/share/zoneinfo/$TZ /etc/localtime 
+    dpkg-reconfigure -f noninteractive tzdata 
 
-  echo "date.timezone=$TZ" > /etc/php/7.2/apache2/conf.d/99_datatime.ini 
+    echo "date.timezone=$TZ" > /etc/php/7.2/apache2/conf.d/99_datatime.ini 
+  fi
 fi
-
 #######
 # LANG
 if test -v MOODLE_lang; then
-  if ! test -d /var/www/html/lang/$MOODLE_lang; then
-    mkdir -p cd $MOODLE_dataroot/lang && cd $MOODLE_dataroot/lang/
-    wget https://download.moodle.org/download.php/direct/langpack/$MOODLE_VER/$MOODLE_lang.zip -q -O /tmp/temp.zip && unzip /tmp/temp.zip && rm -rf /tmp/temp.zip
-    apt-get update && apt-get -y install language-pack-$MOODLE_lang && dpkg-reconfigure locales 
+  if ! test -d /var/www/html/lang/$MOODLE_lang && ! test -d $MOODLE_dataroot/lang/$MOODLE_lang; then
+    mkdir -p $MOODLE_dataroot/lang && cd $MOODLE_dataroot/lang/
+    wget https://download.moodle.org/download.php/direct/langpack/$MOODLE_VER/$MOODLE_lang.zip -q -O /tmp/temp.zip && unzip /tmp/temp.zip && rm -rf /tmp/temp.zip    
+  fi
+  # check lang package 
+  if [ `dpkg-query -l language-pack-$MOODLE_lang 2>/dev/null | egrep ^ii >/dev/null; echo $?` -eq 1 ]; then
+    apt-get update 
+    apt-get -y install language-pack-$MOODLE_lang 
+    dpkg-reconfigure locales 
   fi
 fi
 
@@ -37,12 +44,15 @@ fi
 
 if test -v MOODLE_sslproxy; then
   proto=https
+  export VIRTUAL_PORT=443
   export MOODLE_reverseproxy=true
 else
   proto=http
 fi
 
-export MOODLE_wwwroot=$proto://$VIRTUAL_HOST:$VIRTUAL_PORT$VIRTUAL_URL
+if ! test -v MOODLE_wwwroot; then
+  export MOODLE_wwwroot=$proto://$VIRTUAL_HOST:$VIRTUAL_PORT$VIRTUAL_URL
+fi
 
 
 #######
@@ -86,17 +96,11 @@ require_once(dirname(__FILE__) . '/lib/setup.php');
 
 #######
 # permission check
-echo "Check permission in $MOODLE_dataroot... "
+echo "Check permissions in $MOODLE_dataroot... "
 echo "placeholder" > $MOODLE_dataroot/placeholder
 chown -R www-data:www-data $MOODLE_dataroot
 find $MOODLE_dataroot -type d -exec chmod 700 {} \; 
 find $MOODLE_dataroot -type f -exec chmod 600 {} \; 
-
-echo "Check permission in www-root... "
-chown -R root:www-data /var/www/html
-find /var/www/html -type d -exec chmod 750 {} \; 
-find /var/www/html -type f -exec chmod 640 {} \; 
-
 
 # start up cron
 /usr/sbin/cron
