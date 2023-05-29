@@ -1,5 +1,5 @@
 # base
-FROM ubuntu:18.04
+FROM ubuntu:22.04
 LABEL maintainer="Pablo A. Vargas <pablo@pampa.cloud>"
 
 # Environment
@@ -10,7 +10,7 @@ RUN apt-get update && apt-get -y dist-upgrade && apt-get -y install mysql-client
 
 #
 
-RUN cd /tmp && git clone -b MOODLE_39_STABLE git://git.moodle.org/moodle.git --depth=1 && \
+RUN cd /tmp && git clone -b MOODLE_401_STABLE git://git.moodle.org/moodle.git --depth=1 && \
 	mv /tmp/moodle/* /var/www/html/ && rm -rf /var/www/html/index.html && \
 	chown -R root:www-data /var/www/html && \
     find /var/www/html -type d -exec chmod 750 {} \;  && \
@@ -20,7 +20,7 @@ RUN cd /tmp && git clone -b MOODLE_39_STABLE git://git.moodle.org/moodle.git --d
 #
 COPY files/foreground.sh /etc/foreground.sh
 #
-COPY files/moodle-php.ini /etc/php/7.2/apache2/conf.d/moodle-php.ini
+COPY files/moodle-php.ini /etc/php/8.1/apache2/conf.d/99_moodle-php.ini
 COPY files/apache-moodle.conf /etc/apache2/conf-enabled/apache-moodle.conf
 COPY files/moodlecron /etc/cron.d/moodlecron
 
@@ -37,6 +37,6 @@ RUN apt-get clean autoclean && apt-get autoremove -y && rm -rf /var/lib/apt/list
 VOLUME ["/var/moodledata","/var/www/html/theme","/var/www/html/mod"]
 EXPOSE 80 443
 
-ENV MOODLE_VER=3.9
+ENV MOODLE_VER=4.1
 
 ENTRYPOINT ["/etc/foreground.sh"]

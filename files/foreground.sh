@@ -17,7 +17,7 @@ if test -v TZ && [ `readlink /etc/localtime` != "/usr/share/zoneinfo/$TZ" ]; the
     ln -snf /usr/share/zoneinfo/$TZ /etc/localtime 
     dpkg-reconfigure -f noninteractive tzdata 
 
-    echo "date.timezone=$TZ" > /etc/php/7.2/apache2/conf.d/99_datatime.ini 
+    echo "date.timezone=$TZ" > /etc/php/8.1/apache2/conf.d/99_datatime.ini 
   fi
 fi
 #######

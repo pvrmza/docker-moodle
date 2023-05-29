@@ -2,7 +2,7 @@ version: '2'
 
 services:
   db:
-    image: mysql:5
+    image: mariadb
     restart: always
     env_file:
       - .env_mysql
@@ -17,7 +17,7 @@ services:
       - db
     links:
       - db:db
-    image: pvrmza/docker-moodle:3.9
+    image: pvrmza/docker-moodle:4.1
     restart: always
     env_file:
       - .env_moodle
